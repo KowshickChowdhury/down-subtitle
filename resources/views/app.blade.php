@@ -16,5 +16,6 @@
     </head>
     <body class="antialiased">
         <div id="root"></div>
+        
     </body>
 </html>

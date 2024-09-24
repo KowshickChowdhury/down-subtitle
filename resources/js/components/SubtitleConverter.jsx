@@ -1,21 +1,27 @@
 import React, { useState } from 'react'
+import '../../css/loading.css';
+import SubtitleApis from '../apis/SubtitleApis';
 
 const SubtitleConverter = () => {
   const [link, setLink] = useState('');
   const [loading, setLoading] = useState(false);
   const [videoData, setVideoData] = useState(null);
-
+  const [errorMessage, setErrorMessage] = useState('');
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
-    try {
-      // Send the YouTube link to the Laravel backend
-      const response = await axios.post('/api/extract-subtitles', { link });
-      console.log('response', response)
-      setVideoData(response.data);
-    } catch (error) {
-      console.error('Error fetching subtitles:', error);
+    setVideoData(null);
+    setErrorMessage('')
+    const res = await SubtitleApis.save({link});
+    // console.log('response', res)
+    if (res.success) {
+      setVideoData(res.data);
+    } else {
+      setErrorMessage(res.errors);
+      // setTimeout(() => {
+      //   setErrorMessage('');
+      // }, 4000)
     }
 
     setLoading(false);
@@ -25,6 +31,11 @@ const SubtitleConverter = () => {
   return (
     <div className='max-w-7xl mx-auto'>
       <div className='mx-4 md:mx-0 my-8'>
+        {loading ?
+          <div className='grid justify-center my-4'>
+            <div className="loader"></div>
+          </div>
+        : ''}
         <form onSubmit={handleSubmit}>
           <div className='md:flex gap-2 justify-center'>
             <input 
@@ -45,6 +56,11 @@ const SubtitleConverter = () => {
           </div>
         </form>
 
+        {errorMessage ?
+          <div className='text-center my-4'>
+            <div className='text-red-500'>{errorMessage}</div>
+          </div>
+        : ''}
         {/* Show video details and download options after extraction */}
         {videoData && !loading && (
           <div className='mt-6 text-center'>

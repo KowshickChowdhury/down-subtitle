@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { useDarkMode } from '../hooks/UseDarkMode'
+import React, { useState, useRef, useEffect } from 'react';
 import { IoMdHome } from 'react-icons/io';
 import { LuHistory } from 'react-icons/lu';
 import { FaRegListAlt } from 'react-icons/fa';
@@ -7,6 +6,8 @@ import { RiQuestionnaireFill } from 'react-icons/ri';
 import { IoClose, IoLanguageSharp, IoMenu } from 'react-icons/io5';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import { Link, useLocation } from 'react-router-dom';
+import { useDarkMode } from '../hooks/useDarkMode';
+import LanguageDropdown from './LanguageDropdown';
 
 const Navbar = () => {
   const [darkMode, setDarkMode] = useDarkMode();
@@ -72,7 +73,7 @@ const Navbar = () => {
                 </Link>
               </li>
               <li className="flex items-center gap-2 ml-4 font-semibold cursor-pointer">
-                <IoLanguageSharp className='text-lg' /> Languages
+                <LanguageDropdown />
               </li>
               <li 
                 className='flex items-center gap-2 ml-4 font-semibold cursor-pointer' 
