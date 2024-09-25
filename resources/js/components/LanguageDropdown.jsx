@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { IoLanguageSharp } from 'react-icons/io5';
-import { useState, useEffect, useRef } from 'react';
 
 const languages = [
   { code: 'en', name: 'English' },
@@ -30,22 +29,13 @@ const LanguageDropdown = () => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [showDropdown])
+  }, [showDropdown]);
 
-  const handleLanguageChange = (code) => {
-    const googleTranslateScript = document.createElement('script');
-    googleTranslateScript.type = 'text/javascript';
-    googleTranslateScript.async = true;
-    googleTranslateScript.src = `https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit`;
-    document.body.appendChild(googleTranslateScript);
-
-    const translateElement = new window.google.translate.TranslateElement({
-      pageLanguage: 'en',
-      includedLanguages: languages.map(lang => lang.code).join(','),
-      layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE
-    }, 'google_translate_element');
-    
-    document.getElementById('google_translate_element').appendChild(translateElement);
+  const handleLanguageChange = (languageCode) => {
+    // Redirect the user to the Google Translate page with the selected language
+    const currentURL = window.location.href;
+    const googleTranslateUrl = `https://translate.google.com/translate?hl=${languageCode}&sl=auto&tl=${languageCode}&u=${encodeURIComponent(currentURL)}`;
+    window.location.href = googleTranslateUrl;
   };
 
   return (

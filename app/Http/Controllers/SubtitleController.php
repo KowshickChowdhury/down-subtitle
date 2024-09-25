@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\History;
 use App\Traits\CommonTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -76,6 +77,18 @@ class SubtitleController extends Controller
         // Convert to plain text and save it to the .txt file
         $plainTextContent = $this->convertToPlainText($subtitleContent);
         file_put_contents($subtitleTxtPath, $plainTextContent);
+
+        if ($link && $videoDetails) {
+            $old_history = History::where('url', $link)->first();
+            // dd($old_history->url);
+            if (!$old_history) {
+                $history = new History();
+                $history->source = 'Youtube';
+                $history->title = $videoDetails['title'];
+                $history->url = $link;
+                $history->save();
+            }
+        }
 
         // Return video metadata and subtitle download links
         return $this->sendResponse([

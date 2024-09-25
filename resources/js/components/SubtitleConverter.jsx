@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import '../../css/loading.css';
 import SubtitleApis from '../apis/SubtitleApis';
+import { FiDownload } from 'react-icons/fi';
 
 const SubtitleConverter = () => {
   const [link, setLink] = useState('');
@@ -42,12 +43,12 @@ const SubtitleConverter = () => {
               type='search' 
               value={link}
               onChange={(e) => setLink(e.target.value)}
-              className='dark:bg-black dark:text-white focus:outline-none focus:border-[#03a87c] text-black border px-3 py-2 w-full md:w-1/2 rounded' 
+              className='dark:bg-black dark:text-white focus:outline-none focus:border-[#008b66] text-black border px-3 py-2 w-full md:w-1/2 rounded' 
               placeholder='Enter a link to download subtitles. Ex: https://youtu.be/rN7yhDl1cuk' 
               required
             />
             <div className='flex justify-center'>
-              <button type="submit" className='px-5 py-2 bg-[#03a87c] rounded my-4 md:my-0'>
+              <button type="submit" className='px-5 py-2 bg-[#008b66] rounded my-4 md:my-0'>
                 <span className='font-semibold text-white'>
                   {loading ? 'Loading...' : 'Download'}
                 </span>
@@ -65,20 +66,23 @@ const SubtitleConverter = () => {
         {videoData && !loading && (
           <div className='mt-6 text-center'>
             {/* Video Thumbnail and Info */}
-            <div className='flex flex-col items-center'>
-              <img src={videoData.video.thumbnail} alt="Video Thumbnail" className='w-64 rounded-md mb-4' />
-              <h3 className='font-semibold text-lg mb-2 dark:text-white'>{videoData.video.title}</h3>
-              <p className='dark:text-gray-300 text-gray-600'>Duration: {videoData.video.duration}</p>
+            <div className='md:flex gap-4'>
+              <img src={videoData.video.thumbnail} alt="Video Thumbnail" className='md:w-64 rounded-md mb-4' />
+              <div className='text-left dark:mt-4'>
+                <h3 className='font-semibold text-lg mb-2 dark:text-white'>{videoData.video.title}</h3>
+                <p className='dark:text-gray-300 text-gray-600'>Duration: {videoData.video.duration}</p>
+              </div>
             </div>
 
             {/* Subtitle Download Options */}
-            <div className='flex flex-col items-center mt-4'>
-              <a href={videoData.srt} download className='text-[#03a87c] font-semibold'>Download SRT</a>
-              <a href={videoData.txt} download className='text-[#03a87c] font-semibold'>Download Text</a>
+            <div className='flex gap-2 mt-4'>
+              <a href={videoData.srt} download className='flex gap-1 p-2 rounded items-center border border-[#008b66] text-[#008b66] font-semibold'><FiDownload className=' text-green-600 text-xl' /> <span className='bg-[#008b66] text-white px-2 py-1 rounded-lg text-xs'>SRT</span> </a>
+              <a href={videoData.txt} download className='flex gap-1 p-2 rounded items-center border border-[#008b66] text-[#008b66] font-semibold'><FiDownload className=' text-green-600 text-xl' /> <span className='bg-[#008b66] text-white px-2 py-1 rounded-lg text-xs'>TXT</span></a>
               <button 
-                className='mt-4 text-[#03a87c] font-semibold' 
-                onClick={() => alert(videoData.raw)}>View Raw Subtitles
+                className='flex gap-1 p-2 rounded items-center border border-[#008b66] text-[#008b66] font-semibold' 
+                onClick={() => alert(videoData.raw)}><FiDownload className=' text-green-600 text-xl' /> <span className='bg-[#008b66] text-white px-2 py-1 rounded-lg text-xs'>RAW</span>
               </button>
+              <div className='dark:text-white grid items-center md:ml-2'>English (auto generated)</div>
             </div>
           </div>
         )}

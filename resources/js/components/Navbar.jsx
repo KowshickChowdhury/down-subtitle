@@ -42,7 +42,9 @@ const Navbar = () => {
     <div className='bg-white dark:bg-black text-black dark:text-white p-2 border-b dark:border-b-[#161722] shadow-sm'>
         <nav className=" max-w-7xl mx-auto flex items-center justify-between ">
             <div className="flex items-center">
+              <Link to='/'>
                 <img src={darkMode ? 'https://downsub.com/img/logo-white.png' : 'https://downsub.com/img/logo.png'} alt="Logo" className="h-12" />
+              </Link>
             </div>
             {/* Menu Button for small screens */}
             <div className="lg:hidden">
@@ -57,17 +59,17 @@ const Navbar = () => {
                   <IoMdHome className='text-lg' /> Home
                 </Link>
               </li>
-              <li className={`ml-4 px-3 py-1 rounded ${location.pathname === '/history' ? 'bg-slate-200' : ''}`}>
+              <li className={`ml-4 px-3 py-1 rounded ${location.pathname === '/history' ? 'dark:bg-[#404040] bg-slate-200' : ''}`}>
                 <Link to='/history' className='flex items-center gap-2 font-semibold cursor-pointer'>
                   <LuHistory className='text-lg' /> History
                 </Link>
               </li>
-              <li className={`ml-4 px-3 py-1 rounded ${location.pathname === '/sites' ? 'bg-slate-200' : ''}`}>
+              <li className={`ml-4 px-3 py-1 rounded ${location.pathname === '/sites' ? 'dark:bg-[#404040] bg-slate-200' : ''}`}>
                 <Link to='/' className='flex items-center gap-2 font-semibold cursor-pointer'>
                   <FaRegListAlt className='text-lg' /> Supported Sites
                 </Link>
               </li>
-              <li className={`ml-4 px-3 py-1 rounded ${location.pathname === '/contact' ? 'bg-slate-200' : ''}`}>
+              <li className={`ml-4 px-3 py-1 rounded ${location.pathname === '/contact' ? 'dark:bg-[#404040] bg-slate-200' : ''}`}>
                 <Link to='/' className='flex items-center gap-2 font-semibold cursor-pointer'>
                 <RiQuestionnaireFill className='text-lg' /> Contact
                 </Link>
