@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\SubtitleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,3 +26,9 @@ Route::post('/extract-subtitles', [SubtitleController::class, 'extractSubtitles'
 // History Api's
 Route::get('/histories', [HistoryController::class, 'index']);
 Route::post('/history/{id}', [HistoryController::class, 'destroy']);
+Route::post('/histories', [HistoryController::class, 'destroyAll']);
+
+//Payment Api's
+Route::post('/paypal/create-payment', [PayPalController::class, 'createPayment']);
+Route::post('/paypal/capture-payment', [PayPalController::class, 'paymentSuccess']);
+Route::post('/payment-cancel', [PayPalController::class, 'paymentCancel']);

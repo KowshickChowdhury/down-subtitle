@@ -8,6 +8,7 @@ import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import { Link, useLocation } from 'react-router-dom';
 import { useDarkMode } from '../hooks/useDarkMode';
 import LanguageDropdown from './LanguageDropdown';
+import { AiOutlineDollarCircle } from 'react-icons/ai';
 
 const Navbar = () => {
   const [darkMode, setDarkMode] = useDarkMode();
@@ -65,12 +66,17 @@ const Navbar = () => {
                 </Link>
               </li>
               <li className={`ml-4 px-3 py-1 rounded ${location.pathname === '/sites' ? 'dark:bg-[#404040] bg-slate-200' : ''}`}>
-                <Link to='/' className='flex items-center gap-2 font-semibold cursor-pointer'>
+                <Link to='/sites' className='flex items-center gap-2 font-semibold cursor-pointer'>
                   <FaRegListAlt className='text-lg' /> Supported Sites
                 </Link>
               </li>
+              <li className={`ml-4 px-3 py-1 rounded ${location.pathname === '/donate' ? 'dark:bg-[#404040] bg-slate-200' : ''}`}>
+                <Link to='/donate' className='flex items-center gap-2 font-semibold cursor-pointer'>
+                  <AiOutlineDollarCircle /> Donate
+                </Link>
+              </li>
               <li className={`ml-4 px-3 py-1 rounded ${location.pathname === '/contact' ? 'dark:bg-[#404040] bg-slate-200' : ''}`}>
-                <Link to='/' className='flex items-center gap-2 font-semibold cursor-pointer'>
+                <Link to='/contact' className='flex items-center gap-2 font-semibold cursor-pointer'>
                 <RiQuestionnaireFill className='text-lg' /> Contact
                 </Link>
               </li>
@@ -91,23 +97,36 @@ const Navbar = () => {
               className={`lg:hidden fixed inset-y-0 left-0 transform ${menuOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out bg-white dark:bg-black w-64 z-50 shadow-lg`}
             >
               <ul className="flex flex-col mt-4 space-y-4 p-4">
-                <li className="flex items-center gap-2 font-semibold cursor-pointer">
-                  <IoMdHome /> Home
+                <li className={`px-3 py-1 rounded ${location.pathname === '/' ? 'dark:bg-[#404040] bg-slate-200' : ''}`}>
+                  <Link to='/' className='flex items-center gap-2 font-semibold cursor-pointer'>
+                    <IoMdHome className='text-lg' /> Home
+                  </Link>
                 </li>
-                <li className="flex items-center gap-2 font-semibold cursor-pointer">
-                  <LuHistory /> History
+                <li className={`px-3 py-1 rounded ${location.pathname === '/history' ? 'dark:bg-[#404040] bg-slate-200' : ''}`}>
+                  <Link to='/history' className='flex items-center gap-2 font-semibold cursor-pointer'>
+                    <LuHistory className='text-lg' /> History
+                  </Link>
                 </li>
-                <li className="flex items-center gap-2 font-semibold cursor-pointer">
-                  <FaRegListAlt /> Supported Sites
+                <li className={`px-3 py-1 rounded ${location.pathname === '/sites' ? 'dark:bg-[#404040] bg-slate-200' : ''}`}>
+                  <Link to='/sites' className='flex items-center gap-2 font-semibold cursor-pointer'>
+                    <FaRegListAlt className='text-lg' /> Supported Sites
+                  </Link>
                 </li>
-                <li className="flex items-center gap-2 font-semibold cursor-pointer">
-                  <RiQuestionnaireFill /> Contact
+                <li className={`px-3 py-1 rounded ${location.pathname === '/donate' ? 'dark:bg-[#404040] bg-slate-200' : ''}`}>
+                  <Link to='/donate' className='flex items-center gap-2 font-semibold cursor-pointer'>
+                    <AiOutlineDollarCircle /> Donate
+                  </Link>
                 </li>
-                <li className="flex items-center gap-2 font-semibold cursor-pointer">
-                  <IoLanguageSharp /> Languages
+                <li className={`px-3 py-1 rounded ${location.pathname === '/contact' ? 'dark:bg-[#404040] bg-slate-200' : ''}`}>
+                  <Link to='/contact' className='flex items-center gap-2 font-semibold cursor-pointer'>
+                  <RiQuestionnaireFill className='text-lg' /> Contact
+                  </Link>
+                </li>
+                <li className="flex items-center gap-2 font-semibold cursor-pointer px-3 py-1 ">
+                  <LanguageDropdown />
                 </li>
                 <li 
-                  className='flex items-center gap-2 font-semibold cursor-pointer' 
+                  className='flex items-center gap-2 ml-4 font-semibold cursor-pointer' 
                   onClick={() => setDarkMode(!darkMode)}>
                   {darkMode ? <MdLightMode /> : <MdDarkMode />}
                   Mode

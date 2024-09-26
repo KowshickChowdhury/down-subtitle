@@ -62,14 +62,14 @@ class SubtitleController extends Controller
         // Sanitize the video title to create a valid filename
         $sanitizedTitle = Str::slug($videoDetails['title'], '-');
 
-        // Ensure that the subtitles directory exists
-        if (!is_dir('D:/xampp/htdocs/down-subtitle/public/subtitles')) {
-            mkdir('D:/xampp/htdocs/down-subtitle/public/subtitles', 0777, true);
+        $subtitlesDir = public_path('subtitles');
+        if (!is_dir($subtitlesDir)) {
+            mkdir($subtitlesDir, 0777, true);
         }
 
         // Define the subtitle paths using sanitized title
-        $subtitleSrtPath = 'D:/xampp/htdocs/down-subtitle/public/subtitles/' . $sanitizedTitle . '.srt';
-        $subtitleTxtPath = 'D:/xampp/htdocs/down-subtitle/public/subtitles/' . $sanitizedTitle . '.txt';
+        $subtitleSrtPath = public_path('subtitles/' . $sanitizedTitle . '.srt');
+        $subtitleTxtPath = public_path('subtitles/' . $sanitizedTitle . '.txt');
 
         // Save the subtitle content to the .srt file
         file_put_contents($subtitleSrtPath, $this->convertToSRT($subtitleContent));

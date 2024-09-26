@@ -22,4 +22,10 @@ class HistoryController extends Controller
         History::destroy($id);
         return $this->sendResponse(['message' => 'History Deleted Successfully']);
     }
+    
+    public function destroyAll()
+    {
+        History::truncate();
+        return $this->sendResponse(['message' => 'Histories Cleared Successfully']);
+    }
 }

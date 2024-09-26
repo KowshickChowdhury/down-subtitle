@@ -9,6 +9,7 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import { MainLayout } from './layouts/MainLayout';
 import { History } from './pages/History';
+import Donate from './pages/Donate';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -16,8 +17,8 @@ const router = createBrowserRouter(
       <Route element={<MainLayout />}>
         <Route path='/' element={<Home />} />
         <Route path='/history' element={<History />} />
+        <Route path='/donate' element={<Donate />} />
         {/* 
-        <Route path='/blog/:title' element={<BlogDetails />} />
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} /> 
         */}

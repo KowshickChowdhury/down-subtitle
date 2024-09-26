@@ -22,4 +22,15 @@ HistoryApis.delete = async (id) => {
     }
 };
 
+HistoryApis.clearAll = async () => {
+    const url = `/api/histories`;
+    try {
+        const response = await axios.post(url);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
+};
+
 export default HistoryApis;
