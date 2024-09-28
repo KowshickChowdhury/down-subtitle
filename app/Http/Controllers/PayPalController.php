@@ -13,6 +13,7 @@ class PayPalController extends Controller
 
     public function createPayment(Request $request)
     {
+        
         $provider = new PayPalClient();
         $provider->setApiCredentials(config('paypal'));
         $paypalToken = $provider->getAccessToken();

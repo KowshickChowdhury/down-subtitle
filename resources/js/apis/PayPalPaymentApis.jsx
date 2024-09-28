@@ -1,6 +1,7 @@
 const PayPalPaymentApis = {};
 
 PayPalPaymentApis.createPayment = async(amount) => {
+    console.log('amount333', amount)
     try {
         const response = await axios.post('/api/paypal/create-payment', { amount });
         return response.data;

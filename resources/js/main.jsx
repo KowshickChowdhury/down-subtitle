@@ -10,6 +10,8 @@ import Home from './pages/Home';
 import { MainLayout } from './layouts/MainLayout';
 import { History } from './pages/History';
 import Donate from './pages/Donate';
+import SupportSites from './pages/SupportSites';
+import Contact from './pages/Contact';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,10 +20,8 @@ const router = createBrowserRouter(
         <Route path='/' element={<Home />} />
         <Route path='/history' element={<History />} />
         <Route path='/donate' element={<Donate />} />
-        {/* 
-        <Route path='/about' element={<About />} />
+        <Route path='/sites' element={<SupportSites />} />
         <Route path='/contact' element={<Contact />} /> 
-        */}
       </Route>
       <Route path="*" element={<h1>Page not found</h1>} />
     </Route>

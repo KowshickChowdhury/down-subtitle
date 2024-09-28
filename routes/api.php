@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\PayPalController;
+use App\Http\Controllers\StripeController;
 use App\Http\Controllers\SubtitleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -32,3 +33,6 @@ Route::post('/histories', [HistoryController::class, 'destroyAll']);
 Route::post('/paypal/create-payment', [PayPalController::class, 'createPayment']);
 Route::post('/paypal/capture-payment', [PayPalController::class, 'paymentSuccess']);
 Route::post('/payment-cancel', [PayPalController::class, 'paymentCancel']);
+
+//Strip Api's
+Route::post('/stripe/create-payment-intent', [StripeController::class, 'createPaymentIntent']);
