@@ -12,6 +12,8 @@ import { History } from './pages/History';
 import Donate from './pages/Donate';
 import SupportSites from './pages/SupportSites';
 import Contact from './pages/Contact';
+import GoogleAuthRedirect from './components/GoogleAuthRedirect';
+import { AuthLayout } from './layouts/AuthLayout';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,6 +24,10 @@ const router = createBrowserRouter(
         <Route path='/donate' element={<Donate />} />
         <Route path='/sites' element={<SupportSites />} />
         <Route path='/contact' element={<Contact />} /> 
+        <Route path="/auth/google/callback" element={<GoogleAuthRedirect />} />
+      </Route>
+      <Route element={<AuthLayout />}>
+        
       </Route>
       <Route path="*" element={<h1>Page not found</h1>} />
     </Route>

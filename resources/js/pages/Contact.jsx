@@ -1,11 +1,27 @@
 import React, {useState} from 'react'
+import GoogleLoginApis from '../apis/GoogleLoginApis';
+import Profile from '../components/Profile';
 
 const Contact = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const token = localStorage.getItem('token');
 
     const handleDropDown = () => {
         setIsOpen(!isOpen);
     }
+
+    const handleGoogleLogin = async () => {
+        try {
+            const res = await GoogleLoginApis.googleLogin();
+            
+            if (res && res.url) {
+                window.location.href = res.url;
+            }
+        } catch (error) {
+            console.error('Google login failed', error);
+        }
+    }
+    
     
   return (
     <div className='max-w-7xl mx-auto dark:text-white'>
@@ -18,67 +34,74 @@ const Contact = () => {
         <div className='flex justify-between border-b py-4'>
             <div className='font-semibold grid items-center'>489 Comments</div>
             <div>
-                <button
-                    id="dropdownDefaultButton"
-                    onClick={handleDropDown}
-                    className="dark:text-white focus:outline-none font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center"
-                    type="button"
-                >
-                    Login
-                    <svg
-                    className="w-2.5 h-2.5 ms-3"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 10 6"
+                {token ?
+                    <Profile />
+                :
+                <>
+                    <button
+                        id="dropdownDefaultButton"
+                        onClick={handleDropDown}
+                        className="dark:text-white focus:outline-none font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center"
+                        type="button"
                     >
-                    <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m1 1 4 4 4-4"
-                    />
-                    </svg>
-                </button>
-
-                {/* Dropdown menu */}
-                {isOpen && (
-                    <div
-                    id="dropdown"
-                    className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-28 dark:bg-gray-700 absolute"
-                    >
-                    <ul
-                        className="py-2 text-sm text-gray-700 dark:text-gray-200"
-                        aria-labelledby="dropdownDefaultButton"
-                    >
-                        <li>
-                        <a
-                            href="#"
-                            className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        Login
+                        <svg
+                        className="w-2.5 h-2.5 ms-3"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 10 6"
                         >
-                            Google
-                        </a>
-                        </li>
-                        <li>
-                        <a
-                            href="#"
-                            className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="m1 1 4 4 4-4"
+                        />
+                        </svg>
+                    </button>
+                    
+                    {/* Dropdown menu */}
+                    {isOpen && (
+                        <div
+                        id="dropdown"
+                        className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-28 dark:bg-gray-700 absolute"
                         >
-                            Facebook
-                        </a>
-                        </li>
-                        <li>
-                        <a
-                            href="#"
-                            className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        <ul
+                            className="py-2 text-sm text-gray-700 dark:text-gray-200"
+                            aria-labelledby="dropdownDefaultButton"
                         >
-                            Twitter
-                        </a>
-                        </li>
-                    </ul>
-                    </div>
-                )}
+                            <li>
+                                <a
+                                    href="#"
+                                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                    onClick={handleGoogleLogin}
+                                >
+                                    Google
+                                </a>
+                            </li>
+                            <li>
+                            <a
+                                href="#"
+                                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                            >
+                                Facebook
+                            </a>
+                            </li>
+                            <li>
+                            <a
+                                href="#"
+                                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                            >
+                                Twitter
+                            </a>
+                            </li>
+                        </ul>
+                        </div>
+                    )}
+                </>
+                }
             </div>
         </div>
       </div>
