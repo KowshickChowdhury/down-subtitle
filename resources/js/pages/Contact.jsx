@@ -1,14 +1,52 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import GoogleLoginApis from '../apis/GoogleLoginApis';
 import Profile from '../components/Profile';
+import ProfileApis from '../apis/ProfileApis';
+import Comments from '../components/Comments';
+import CommentApis from '../apis/CommentApis';
 
 const Contact = () => {
+    const [user, setUser] = useState();
+    const [comments, setComments] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const token = localStorage.getItem('token');
+    const hasReload = localStorage.getItem('hasReload')
+
+    useEffect(() => {
+        if (token && !hasReload) {
+            localStorage.setItem('hasReload', 'true');
+            window.location.reload();
+        }
+    }, [token, hasReload])
+
+    useEffect(() => {
+        if (token) {
+            getUser();
+        }
+        getComments();
+    }, []);
 
     const handleDropDown = () => {
         setIsOpen(!isOpen);
     }
+
+    const getComments = async() => {
+        const res = await CommentApis.index();
+        if (res.success) {
+            setComments(res.data);
+        }
+    }
+
+    const getUser = async () => {
+        setLoading(true);
+        const res = await ProfileApis.index();
+        console.log('res', res);
+        if (res.success) {
+            setUser(res.data);
+        }
+        setLoading(false);
+    };
 
     const handleGoogleLogin = async () => {
         try {
@@ -32,10 +70,10 @@ const Contact = () => {
             <p>- Links or messages displayed by our website.</p>
         </div>
         <div className='flex justify-between border-b py-4'>
-            <div className='font-semibold grid items-center'>489 Comments</div>
+            <div className='font-bold grid items-end text-gray-400'>{comments.length} Comments</div>
             <div>
                 {token ?
-                    <Profile />
+                    <Profile loading={loading} user={user} />
                 :
                 <>
                     <button
@@ -104,6 +142,7 @@ const Contact = () => {
                 }
             </div>
         </div>
+        <Comments loading={loading} user={user} />
       </div>
     </div>
   )

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\StripeController;
@@ -27,6 +28,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/profile', [UserController::class, 'index']);
+    Route::resource('/comments', CommentController::class);
     // Route::resource('category', CategoryController::class);
     // Route::post('category-update', [CategoryController::class, 'update']);
     // Route::resource('item', ItemController::class);
@@ -48,6 +50,8 @@ Route::post('/histories', [HistoryController::class, 'destroyAll']);
 Route::post('/paypal/create-payment', [PayPalController::class, 'createPayment']);
 Route::post('/paypal/capture-payment', [PayPalController::class, 'paymentSuccess']);
 Route::post('/payment-cancel', [PayPalController::class, 'paymentCancel']);
+
+Route::get('/all-comments', [CommentController::class, 'index']);
 
 //Strip Api's
 Route::post('/stripe/create-payment-intent', [StripeController::class, 'createPaymentIntent']);
