@@ -42,9 +42,6 @@ COPY nginx.conf /etc/nginx/sites-available/default
 # Set correct permissions
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
-# Generate app key if not set
-RUN php artisan key:generate --force
-
 # Expose port 80
 EXPOSE 80
 
