@@ -35,7 +35,7 @@ class SubtitleController extends Controller
 
         // Fetch video details
         $videoDetails = $this->fetchVideoDetails($videoId);
-        dd($videoDetails);
+        
         if (!$videoDetails) {
             return response()->json(['error' => 'Failed to retrieve video details.'], 500);
         }
@@ -133,7 +133,7 @@ class SubtitleController extends Controller
         // Get video page content
         $videoPageUrl = "https://www.youtube.com/watch?v=" . $videoId;
         $videoPageContent = file_get_contents($videoPageUrl);
-
+        dd($videoPageContent);
         // Extract caption tracks URL (can be improved with a proper regex pattern)
         if (preg_match('/"captionTracks":\[(.*?)\]/', $videoPageContent, $matches)) {
             $captionTracksJson = $matches[1];
