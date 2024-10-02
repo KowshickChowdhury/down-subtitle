@@ -35,7 +35,7 @@ class SubtitleController extends Controller
 
         // Fetch video details
         $videoDetails = $this->fetchVideoDetails($videoId);
-
+        dd($videoDetails);
         if (!$videoDetails) {
             return response()->json(['error' => 'Failed to retrieve video details.'], 500);
         }
