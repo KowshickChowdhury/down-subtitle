@@ -31,13 +31,19 @@ WORKDIR /var/www
 COPY . /var/www
 
 # Install Composer dependencies
-RUN composer install
+RUN composer install --no-interaction --no-dev --prefer-dist
 
 # Install NPM dependencies and build assets
 RUN npm install && npm run build
 
 # Copy Nginx config
 COPY nginx.conf /etc/nginx/sites-available/default
+
+# Set correct permissions
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+
+# Generate app key if not set
+RUN php artisan key:generate --force
 
 # Expose port 80
 EXPOSE 80

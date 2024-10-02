@@ -11,3 +11,5 @@ services:
         value: production
       - key: APP_DEBUG
         value: false
+      - key: APP_URL
+        value: https://down-subtitle.onrender.com
