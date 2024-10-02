@@ -35,7 +35,7 @@ class SubtitleController extends Controller
 
         // Fetch video details
         $videoDetails = $this->fetchVideoDetails($videoId);
-        
+
         if (!$videoDetails) {
             return response()->json(['error' => 'Failed to retrieve video details.'], 500);
         }
@@ -133,7 +133,7 @@ class SubtitleController extends Controller
         // Get video page content
         $videoPageUrl = "https://www.youtube.com/watch?v=" . $videoId;
         $videoPageContent = file_get_contents($videoPageUrl);
-        dd($videoPageContent);
+
         // Extract caption tracks URL (can be improved with a proper regex pattern)
         if (preg_match('/"captionTracks":\[(.*?)\]/', $videoPageContent, $matches)) {
             $captionTracksJson = $matches[1];
@@ -173,6 +173,40 @@ class SubtitleController extends Controller
     {
         $interval = new \DateInterval($duration);
         return $interval->format('%H:%I:%S');
+    }
+
+    public function translate(Request $request)
+    {
+        // dd($request);
+        $request->validate([
+            'text' => 'required|string',
+            'targetLanguage' => 'required|string|size:2',
+        ]);
+
+        $apiKey = env('YANDEX_API_KEY');
+        $folderId = env('YANDEX_FOLDER_ID');
+        $apiUrl = 'https://translate.api.cloud.yandex.net/translate/v2/translate';
+
+        try {
+            $response = Http::withHeaders([
+                'Authorization' => "Api-Key {$apiKey}",
+                'Content-Type' => 'application/json',
+            ])->post($apiUrl, [
+                'folderId' => $folderId,
+                'texts' => [$request->text],
+                'targetLanguageCode' => $request->targetLanguage,
+            ]);
+            
+            dd($response);
+
+            if ($response->successful()) {
+                return response()->json($response->json());
+            } else {
+                return response()->json(['error' => 'Translation failed'], 500);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Translation service unavailable'], 503);
+        }
     }
 
 }

@@ -14,6 +14,7 @@ import SupportSites from './pages/SupportSites';
 import Contact from './pages/Contact';
 import GoogleAuthRedirect from './components/GoogleAuthRedirect';
 import { AuthLayout } from './layouts/AuthLayout';
+import TranslateSubtitle from './pages/TranslateSubtitle';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,6 +26,7 @@ const router = createBrowserRouter(
         <Route path='/sites' element={<SupportSites />} />
         <Route path='/contact' element={<Contact />} /> 
         <Route path="/auth/google/callback" element={<GoogleAuthRedirect />} />
+        <Route path='/translate' element={<TranslateSubtitle />} /> 
       </Route>
       <Route element={<AuthLayout />}>
         

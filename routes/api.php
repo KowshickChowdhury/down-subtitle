@@ -55,3 +55,5 @@ Route::get('/all-comments', [CommentController::class, 'index']);
 
 //Strip Api's
 Route::post('/stripe/create-payment-intent', [StripeController::class, 'createPaymentIntent']);
+
+Route::post('/translate', [SubtitleController::class, 'translate']);
