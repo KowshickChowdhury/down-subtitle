@@ -8,7 +8,8 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
     zip \
-    unzip
+    unzip \
+    nginx
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -32,12 +33,14 @@ COPY . /var/www
 # Install Composer dependencies
 RUN composer install
 
-# Install NPM dependencies
-RUN npm install
+# Install NPM dependencies and build assets
+RUN npm install && npm run build
 
-# Build assets
-RUN npm run build
+# Copy Nginx config
+COPY nginx.conf /etc/nginx/sites-available/default
 
-# Expose port 8080 and start php-fpm server
-EXPOSE 8080
-CMD ["php-fpm"]
+# Expose port 80
+EXPOSE 80
+
+# Start Nginx and PHP-FPM
+CMD service nginx start && php-fpm
