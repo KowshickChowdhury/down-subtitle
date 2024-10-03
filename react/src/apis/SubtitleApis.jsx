@@ -1,7 +1,10 @@
+import axios from "axios";
+import { globalConfig } from "../Global";
+
 const SubtitleApis = {};
 
 SubtitleApis.save = async (data) => {
-    let url = "/api/extract-subtitles";
+    let url = `${globalConfig.apiUrl}/api/extract-subtitles`;
     const res = await axios.post(url, data)
         .then(response => {
             return response.data;

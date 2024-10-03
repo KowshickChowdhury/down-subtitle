@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../../css/profile.css';
+import '../css/profile.css';
 import CommentApis from '../apis/CommentApis';
 import moment from 'moment';
 
@@ -76,11 +76,11 @@ const Comments = ({ loading, user }) => {
                     {allComments?.map((allcomment) => (
                         <div key={allcomment.id} className='flex gap-4 my-4'>
                             <div>
-                                <img src={allcomment.user.avatar} alt="" className='w-12 rounded-2xl' />
+                                <img src={allcomment.user?.avatar} alt="" className='w-12 rounded-2xl' />
                             </div>
                             <div>
-                                <div className='text-[#008b66] font-bold'>{allcomment.user.name}</div>
-                                <div className='text-gray-400 text-xs'>{moment(allcomment.user.created_at).fromNow()}</div>
+                                <div className='text-[#008b66] font-bold'>{allcomment.user?.name}</div>
+                                <div className='text-gray-400 text-xs'>{moment(allcomment.user?.created_at).fromNow()}</div>
                                 <div className='my-2'>{allcomment.comments}</div>
                             </div>
                         </div>

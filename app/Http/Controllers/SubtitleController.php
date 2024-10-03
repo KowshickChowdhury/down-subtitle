@@ -6,6 +6,7 @@ use App\Models\History;
 use App\Traits\CommonTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class SubtitleController extends Controller
@@ -196,16 +197,23 @@ class SubtitleController extends Controller
                 'texts' => [$request->text],
                 'targetLanguageCode' => $request->targetLanguage,
             ]);
-            
-            dd($response);
 
             if ($response->successful()) {
                 return response()->json($response->json());
             } else {
-                return response()->json(['error' => 'Translation failed'], 500);
+                Log::error('Yandex API Error', [
+                    'status' => $response->status(),
+                    'body' => $response->body(),
+                    'headers' => $response->headers()
+                ]);
+                return response()->json(['error' => 'Translation failed: ' . $response->body()], $response->status());
             }
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Translation service unavailable'], 503);
+            Log::error('Yandex API Exception', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            return response()->json(['error' => 'Translation service unavailable: ' . $e->getMessage()], 503);
         }
     }
 

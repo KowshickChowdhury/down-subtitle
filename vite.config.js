@@ -7,13 +7,13 @@ export default defineConfig({
         include: ['sweetalert2-react-content'],
       },
     plugins: [
-        laravel({
-            input: [
-                'resources/css/app.css',
-                'resources/js/app.js',
-            ],
-            refresh: true,
-        }),
+        // laravel({
+        //     input: [
+        //         'resources/css/app.css',
+        //         'resources/js/app.js',
+        //     ],
+        //     refresh: true,
+        // }),
         react(),
     ],
 });

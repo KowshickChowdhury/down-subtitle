@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import '../../css/loading.css';
+import '../css/loading.css';
 import SubtitleApis from '../apis/SubtitleApis';
 import { FiDownload } from 'react-icons/fi';
 

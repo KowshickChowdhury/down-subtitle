@@ -1,7 +1,10 @@
+import axios from "axios";
+import { globalConfig } from "../Global";
+
 const HistoryApis = {};
 
 HistoryApis.index = async() => {
-    const res = await axios.get("/api/histories")
+    const res = await axios.get(`${globalConfig.apiUrl}/api/histories`)
         .then(response => {
             return response.data;
         })
@@ -12,7 +15,7 @@ HistoryApis.index = async() => {
 };
 
 HistoryApis.delete = async (id) => {
-    const url = `/api/history/${id}`;
+    const url = `${globalConfig.apiUrl}/api/history/${id}`;
     try {
         const response = await axios.post(url);
         return response.data;
@@ -23,7 +26,7 @@ HistoryApis.delete = async (id) => {
 };
 
 HistoryApis.clearAll = async () => {
-    const url = `/api/histories`;
+    const url = `${globalConfig.apiUrl}/api/histories`;
     try {
         const response = await axios.post(url);
         return response.data;

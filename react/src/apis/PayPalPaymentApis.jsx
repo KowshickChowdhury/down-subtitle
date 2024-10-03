@@ -1,9 +1,12 @@
+import axios from "axios";
+import { globalConfig } from "../Global";
+
 const PayPalPaymentApis = {};
 
 PayPalPaymentApis.createPayment = async(amount) => {
     console.log('amount333', amount)
     try {
-        const response = await axios.post('/api/paypal/create-payment', { amount });
+        const response = await axios.post(`${globalConfig.apiUrl}/api/paypal/create-payment`, { amount });
         return response.data;
     } catch (error) {
         console.error('Error creating PayPal payment:', error);

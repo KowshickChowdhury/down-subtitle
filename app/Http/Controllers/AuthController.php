@@ -42,12 +42,13 @@ class AuthController extends Controller
             $token = $newUser->createToken('DownSubtitle')->plainTextToken;
             // return $this->sendResponse($token);
         }
-        $frontendUrl = 'http://127.0.0.1:8000/auth/google/callback';
+        $frontendUrl = 'http://localhost:3000/auth/google/callback';
         return redirect()->away("{$frontendUrl}?token={$token}");
     }
 
     public function logout()
     {
+        dd("AUTH");
         auth()->user()->tokens()->delete();
         return $this->sendResponse(['msg' => 'Logged out successfully']);
     }

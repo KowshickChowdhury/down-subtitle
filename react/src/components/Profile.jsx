@@ -68,7 +68,7 @@ const Profile = ({ loading, user }) => {
             {loading ? <div>Loading...</div> :
                 <div>
                     <img
-                        src={user ? user.avatar : ''}
+                        src={user ? user?.avatar : ''}
                         className="w-10 rounded-full cursor-pointer grid items-end"
                         onClick={handleProfileDropDown}
                         alt=""
