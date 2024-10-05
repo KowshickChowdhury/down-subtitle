@@ -93,6 +93,7 @@ class SubtitleController extends Controller
         // Return video metadata and subtitle download links
         return $this->sendResponse([
             'videoLink' => $link,
+            'videoID' => $videoId,
             'video' => $videoDetails,
             'srt' => asset('subtitles/' . $sanitizedTitle . '.srt'),
             'txt' => asset('subtitles/' . $sanitizedTitle . '.txt'),
@@ -112,7 +113,7 @@ class SubtitleController extends Controller
         // YouTube Data API URL
         $url = "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id={$videoId}&key={$this->youtubeApiKey}";
 
-        $response = Http::get($url);
+        $response = Http::timeout(10)->get($url);
         if ($response->successful()) {
             $data = $response->json();
             $item = $data['items'][0];
