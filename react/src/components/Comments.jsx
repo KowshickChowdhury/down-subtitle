@@ -7,6 +7,7 @@ const Comments = ({ loading, user }) => {
     const [isShow, setIsShow] = useState(false);
     const [comment, setComment] = useState('');
     const [allComments, setAllComments] = useState([]);
+    const [errors, setErrors] = useState('');
     const token = localStorage.getItem('token');
 
     useEffect(() => {
@@ -23,11 +24,19 @@ const Comments = ({ loading, user }) => {
     const handleShowSection = ()=> {
         setIsShow(!isShow)
     }
-    console.log('comment', comment)
+    // console.log('comment', comment)
     const handleCommentSave = async() => {
         const res = await CommentApis.save(comment );
         if (res.success) {
             getComments();
+            setComment('');
+        }
+        // console.log('commnent', res)
+        if (res.errors) {
+            setErrors(res.errors.errors?.comment[0]);
+            setTimeout(() => {
+                setErrors('');
+            }, 5000)
         }
     }
 
@@ -70,6 +79,11 @@ const Comments = ({ loading, user }) => {
                                 )}
                             </div>
                         )}
+                        {errors && (
+                            <div className='mt-2 font-bold text-red-500'>
+                                {errors}
+                            </div>
+                        )}
                     </div>
                 </div>
                 <div className='my-8'>
@@ -80,7 +94,7 @@ const Comments = ({ loading, user }) => {
                             </div>
                             <div>
                                 <div className='text-[#008b66] font-bold'>{allcomment.user?.name}</div>
-                                <div className='text-gray-400 text-xs'>{moment(allcomment.user?.created_at).fromNow()}</div>
+                                <div className='text-gray-400 text-xs'>{moment(allcomment?.created_at).fromNow()}</div>
                                 <div className='my-2'>{allcomment.comments}</div>
                             </div>
                         </div>

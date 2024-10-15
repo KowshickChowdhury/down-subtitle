@@ -172,10 +172,11 @@ class SubtitleController extends Controller
             $captionTracks = json_decode("[$captionTracksJson]", true);
     
             foreach ($captionTracks as $track) {
-                if ($track['languageCode'] === 'en' && $track['kind'] !== 'asr') {
+                if ($track['languageCode'] === 'en' && isset($track['kind']) && $track['kind'] !== 'asr') {
                     return $track['baseUrl'];
                 }
             }
+            
         }
     
         Log::error("No captions found", ['videoId' => $videoId]);
@@ -195,10 +196,11 @@ class SubtitleController extends Controller
             // Decode JSON and get the auto-generated caption track URL
             $captionTracks = json_decode("[$captionTracksJson]", true);
             foreach ($captionTracks as $track) {
-                if ($track['languageCode'] === 'en' && $track['kind'] === 'asr') {
+                if ($track['languageCode'] === 'en' && isset($track['kind']) && $track['kind'] === 'asr') {
                     return $track['baseUrl'];
                 }
             }
+            
         }
 
         return null;
